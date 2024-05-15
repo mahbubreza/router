@@ -1,8 +1,10 @@
 import React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Index from ".";
 import {
   createContactAction,
+  deleteContactAction,
   editContactAction,
 } from "./actions/contactsAction";
 import Contact from "./Contact";
@@ -20,6 +22,10 @@ const router = createBrowserRouter([
     action: createContactAction,
     children: [
       {
+        index: true,
+        element: <Index />,
+      },
+      {
         path: "/contacts/:contactId",
         element: <Contact />,
         loader: getContactLoader,
@@ -29,6 +35,11 @@ const router = createBrowserRouter([
         element: <EditContact />,
         loader: getContactLoader,
         action: editContactAction,
+      },
+      {
+        path: "/contacts/:contactId/destroy",
+        action: deleteContactAction,
+        errorElement: <div>Oops! There was an error.</div>,
       },
     ],
   },
